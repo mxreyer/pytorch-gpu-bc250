@@ -10,8 +10,6 @@ continue with
 [bc250-jupyterhub-opencl-k3s](https://github.com/mxreyer/bc250-jupyterhub-opencl-k3s)
 once this guide works.
 
----
-
 ## OpenCL, not ROCm
 
 The BC-250's GPU reports as **gfx1013**, which is not supported by ROCm.
