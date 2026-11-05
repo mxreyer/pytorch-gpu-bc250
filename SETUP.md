@@ -58,8 +58,8 @@ Platform #0: rusticl
 ```
 
 A `Rusticl warning: Patched Mesa libclc not detected` line on every run is
-expected — [Stage 2](#stage-2--pytorch-on-the-gpu) and
-[Stage 3](#stage-3--mesas-patched-libclc-recommended) deal with what it breaks.
+expected — [Stage 3](#stage-3--mesas-patched-libclc-recommended) deals with
+what it breaks. Stage 2's rebuilt extension is needed either way.
 Without `RUSTICL_ENABLE=radeonsi`, `clinfo -l` prints only `Platform #0:
 rusticl` with no device under it.
 
@@ -77,13 +77,15 @@ bc250-ocl-venv/bin/pip install torch==2.4.0 --index-url https://download.pytorch
 bc250-ocl-venv/bin/pip install https://github.com/artyom-beilis/pytorch_dlprim/releases/download/0.2.0/pytorch_ocl-0.2.0+torch2.4-cp312-none-linux_x86_64.whl
 ```
 
-The prebuilt wheel asks the OpenCL driver for a newer feature that
-Fedora's stock Mesa doesn't provide, so `softmax`, `cross_entropy`, and
-bias gradients fail to compile. `pytorch_dlprim` already contains a
-portable fallback for this; it's just off by default. Rebuild the
-extension with the fallback on (`CUSTOM_REDUCE=1`) and drop the
-resulting `pt_ocl.so` into the venv. The patches and a build script live in a
-separate repository, [pytorch-dlprim-gfx1013](https://github.com/mxreyer/pytorch-dlprim-gfx1013), which also carries the
+The prebuilt wheel uses the OpenCL 2.0 work-group reduction built-ins
+(`work_group_reduce_add()`), which OpenCL 3.0 made optional and rusticl
+does not provide, whichever libclc is installed (Stage 3 does not change
+this). So `softmax`, `cross_entropy`, and bias gradients fail to compile.
+`pytorch_dlprim` already contains a portable fallback for this; it's just
+off by default, and it has a race that makes softmax come out wrong.
+Rebuild the extension with the fallback on (`CUSTOM_REDUCE=1`) plus the
+one-line barrier fix, and drop the resulting `pt_ocl.so` into the venv.
+The patches and a build script live in a separate repository, [pytorch-dlprim-gfx1013](https://github.com/mxreyer/pytorch-dlprim-gfx1013), which also carries the
 performance work on top (2.54× on training). Its
 [releases](https://github.com/mxreyer/pytorch-dlprim-gfx1013/releases) have a prebuilt `pt_ocl.so`, so the quick route is:
 
