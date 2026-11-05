@@ -22,14 +22,14 @@ BC-250 (OpenCL) and on any CUDA cloud GPU.
 ## Results
 
 BC-250 on `ocl:0` — 24 CU and 40 CU at the stock ~1.5 GHz, 40 CU with the GPU
-overclocked to 2.0 GHz, and that overclock with the software fixes from
+overclocked to 2.0 GHz, and that overclock with the performance patches from
 [pytorch-dlprim-gfx1013](https://github.com/mxreyer/pytorch-dlprim-gfx1013#the-patches)
 (the `pt_ocl.so` from [SETUP.md](SETUP.md), Stage 2); cloud cards from Google
-Colab. The BC-250 rows without "fixed" run `pytorch_ocl` with only the build and
-correctness fixes it needs to work on rusticl, not the performance work; see
-[Which `pt_ocl.so`](#which-pt_oclso) to reproduce them.
-The `vs BC-250 40 CU` column is relative to the stock 40 CU config, so the
-overclock reads as a delta against it.
+Colab. "Fixes-only `pytorch_ocl`" has only the build and correctness fixes it
+needs to work on rusticl; "patched `pytorch_ocl`" adds the performance work.
+See [Which `pt_ocl.so`](#which-pt_oclso) to reproduce either.
+The `vs BC-250 40 CU` column is relative to the 40 CU @ 1.5 GHz fixes-only
+config, so the overclock and the patches read as deltas against it.
 The extra CUs and the clock are unlocked on the host — see
 [duggasco/bc250-40cu-unlock](https://github.com/duggasco/bc250-40cu-unlock).
 `benchmark.py` is unchanged across every run.
@@ -39,10 +39,10 @@ The extra CUs and the clock are unlocked on the host — see
 | Platform | Precision | Train img/s | s/epoch | Test acc | vs BC-250 40 CU |
 | --- | --- | ---: | ---: | ---: | ---: |
 | BC-250, CPU only | fp32 | 70 | 718 | 0.877 | 0.09× |
-| BC-250, 24 CU @ 1.5 GHz | fp32 | 532 | 93.9 | 0.927 | 0.68× |
-| **BC-250, 40 CU @ 1.5 GHz** | **fp32** | **786** | **63.6** | **0.923** | **1.0×** |
-| BC-250, 40 CU @ 2.0 GHz | fp32 | 919 | 54.4 | 0.924 | 1.17× |
-| **BC-250, 40 CU @ 2.0 GHz, fixed** | **fp32** | **2,337** | **21.4** | **0.924** | **2.97×** |
+| BC-250, 24 CU @ 1.5 GHz, fixes-only `pytorch_ocl` | fp32 | 532 | 93.9 | 0.927 | 0.68× |
+| **BC-250, 40 CU @ 1.5 GHz, fixes-only `pytorch_ocl`** | **fp32** | **786** | **63.6** | **0.923** | **1.0×** |
+| BC-250, 40 CU @ 2.0 GHz, fixes-only `pytorch_ocl` | fp32 | 919 | 54.4 | 0.924 | 1.17× |
+| **BC-250, 40 CU @ 2.0 GHz, patched `pytorch_ocl`** | **fp32** | **2,337** | **21.4** | **0.924** | **2.97×** |
 | BC-250, same, `DLPRIM_CONV_FP16=1` | fp16 conv inner loop | 2,992 | 16.7 | 0.926 | 3.81× |
 | T4 (Colab) | fp32 | 2,294 | 21.8 | 0.926 | 2.9× |
 | T4 (Colab) | amp | 4,441 | 11.3 | 0.923 | 5.7× |
@@ -58,10 +58,10 @@ The extra CUs and the clock are unlocked on the host — see
 | Platform | Precision | Infer img/s | vs BC-250 40 CU |
 | --- | --- | ---: | ---: |
 | BC-250, CPU only | fp32 | 214 | 0.06× |
-| BC-250, 24 CU @ 1.5 GHz | fp32 | 2,586 | 0.66× |
-| **BC-250, 40 CU @ 1.5 GHz** | **fp32** | **3,892** | **1.0×** |
-| BC-250, 40 CU @ 2.0 GHz | fp32 | 4,489 | 1.15× |
-| **BC-250, 40 CU @ 2.0 GHz, fixed** | **fp32** | **7,130** | **1.83×** |
+| BC-250, 24 CU @ 1.5 GHz, fixes-only `pytorch_ocl` | fp32 | 2,586 | 0.66× |
+| **BC-250, 40 CU @ 1.5 GHz, fixes-only `pytorch_ocl`** | **fp32** | **3,892** | **1.0×** |
+| BC-250, 40 CU @ 2.0 GHz, fixes-only `pytorch_ocl` | fp32 | 4,489 | 1.15× |
+| **BC-250, 40 CU @ 2.0 GHz, patched `pytorch_ocl`** | **fp32** | **7,130** | **1.83×** |
 | BC-250, same, `DLPRIM_CONV_FP16=1` | fp16 conv inner loop | 10,508 | 2.70× |
 | T4 (Colab) | fp32 | 7,217 | 1.9× |
 | T4 (Colab) | amp | 7,355 | 1.9× |
@@ -99,8 +99,8 @@ from v1.3.0 on:
 
 | rows | file | built with |
 | --- | --- | --- |
-| 24 CU, 40 CU @ 1.5 GHz, 40 CU @ 2.0 GHz | `pt_ocl-fixes-only.so` | `./build.sh fixes`: build and correctness fixes only |
-| `fixed`, `DLPRIM_CONV_FP16=1` | `pt_ocl.so` | `./build.sh`: all patches |
+| fixes-only `pytorch_ocl` | `pt_ocl-fixes-only.so` | `./build.sh fixes`: build and correctness fixes only |
+| patched `pytorch_ocl`, `DLPRIM_CONV_FP16=1` | `pt_ocl.so` | `./build.sh`: all patches |
 
 Install either one over the venv's extension under the name `pt_ocl.so`, and
 clear the kernel cache each time you switch:
