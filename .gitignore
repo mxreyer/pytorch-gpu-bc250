@@ -1,0 +1,21 @@
+# Benchmark dataset download (~170 MB, benchmark.py --data ./data)
+/data/
+
+# Default scratch benchmark output (named results/*.json are kept)
+/results/bench.json
+
+# Local venv from SETUP.md, downloaded / built extension
+/bc250-ocl-venv/
+/pt_ocl.so
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Editor / OS
+.DS_Store
+.vscode/
+.idea/
+*.swp

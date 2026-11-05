@@ -24,11 +24,12 @@ BC-250 (OpenCL) and on any CUDA cloud GPU.
 BC-250 on `ocl:0` — 24 CU and 40 CU at the stock ~1.5 GHz, 40 CU with the GPU
 overclocked to 2.0 GHz, and that overclock with the software fixes from
 [OPENCL-PERF.md](https://github.com/mxreyer/pytorch-dlprim-gfx1013/blob/main/OPENCL-PERF.md)
-(the `pt_ocl.so` that ships in the notebook image); cloud cards from Google
+(the `pt_ocl.so` from [SETUP.md](SETUP.md), Stage 2, which is also what the
+[JupyterHub notebook image](https://github.com/mxreyer/bc250-jupyterhub-opencl-k3s) ships); cloud cards from Google
 Colab.
 The `vs BC-250 40 CU` column is relative to the stock 40 CU config, so the
 overclock reads as a delta against it.
-The extra CUs and the clock are unlocked on the host, outside this repo — see
+The extra CUs and the clock are unlocked on the host — see
 [duggasco/bc250-40cu-unlock](https://github.com/duggasco/bc250-40cu-unlock).
 `benchmark.py` is unchanged across every run.
 
@@ -88,11 +89,28 @@ The extra CUs and the clock are unlocked on the host, outside this repo — see
 
 ## Running it
 
+### On the BC-250, bare metal
+
+With the venv from [SETUP.md](SETUP.md) (Stage 2), from a clone of this repo:
+
+```bash
+export RUSTICL_ENABLE=radeonsi
+bc250-ocl-venv/bin/python benchmark.py --device ocl:0 --epochs 16 --out results/bc250.json
+bc250-ocl-venv/bin/python benchmark.py --device cpu   --epochs 4  --out results/bc250-cpu.json
+```
+
+Add `DLPRIM_CONV_FP16=1` for the fp16-conv row (SETUP.md, Stage 4). The first
+run downloads CIFAR-10 (~170 MB) into `./data`; pass `--data <dir>` to
+put it elsewhere.
+
 ### On the BC-250, through JupyterHub
+
+If you run
+[bc250-jupyterhub-opencl-k3s](https://github.com/mxreyer/bc250-jupyterhub-opencl-k3s):
 
 1. Open `https://juphub.your-name.ts.net`, log in, start your server.
 2. Get `benchmark.py` into your `/home/jovyan` (persistent). Easiest from the
-   box:
+   box, in a clone of this repo:
    ```bash
    sudo kubectl -n jupyterhub cp benchmark.py  jupyter-<user>:/home/jovyan/benchmark.py
    sudo kubectl -n jupyterhub cp compare.py    jupyter-<user>:/home/jovyan/compare.py

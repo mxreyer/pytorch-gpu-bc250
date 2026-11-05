@@ -1,11 +1,17 @@
-"""Stage 4 GPU check - run inside a spawned user pod.
+"""BC-250 GPU check.
 
-Proves the pod is really using the BC-250 GPU through OpenCL, not silently
+Proves PyTorch is really using the BC-250 GPU through OpenCL, not silently
 falling back to CPU, by comparing matmul throughput. A silent CPU fallback
 would show near-identical numbers; a working GPU is several times faster and
 well above what this CPU can physically reach.
 
-    sudo kubectl -n jupyterhub cp k8s/jupyterhub/gpu-check.py jupyter-<user>:/tmp/gpu-check.py
+On bare metal (SETUP.md, Stage 2):
+
+    RUSTICL_ENABLE=radeonsi bc250-ocl-venv/bin/python gpu-check.py
+
+Inside a JupyterHub user pod (bc250-jupyterhub-opencl-k3s, Stage 2):
+
+    sudo kubectl -n jupyterhub cp gpu-check.py jupyter-<user>:/tmp/gpu-check.py
     sudo kubectl -n jupyterhub exec jupyter-<user> -- python /tmp/gpu-check.py
 """
 import time
@@ -45,4 +51,4 @@ for n in (1024, 2048, 4096):
         f"speedup x{gf_g/gf_c:4.1f}   checksum {checksum:.3e}"
     )
 
-print("\nOK - if GPU GFLOP/s >> CPU, the pod is using the BC-250.")
+print("\nOK - if GPU GFLOP/s >> CPU, PyTorch is using the BC-250.")
