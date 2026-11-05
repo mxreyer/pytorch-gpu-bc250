@@ -1,8 +1,7 @@
 # Setup: GPU-accelerated PyTorch on the BC-250
 
 This walks through getting PyTorch to run on the AsRock BC-250's GPU, on
-bare metal, and proving that it does. Everything here happens on the host
-itself; no containers, no Kubernetes. When you are done, the board trains
+bare metal, and proving that it does. When you are done, the board trains
 and infers on `ocl:0` at cloud-T4 speed (see [BENCHMARK.md](BENCHMARK.md)).
 
 To serve that GPU to several people as JupyterHub notebooks on Kubernetes,
