@@ -24,8 +24,7 @@ BC-250 (OpenCL) and on any CUDA cloud GPU.
 BC-250 on `ocl:0` — 24 CU and 40 CU at the stock ~1.5 GHz, 40 CU with the GPU
 overclocked to 2.0 GHz, and that overclock with the software fixes from
 [pytorch-dlprim-gfx1013](https://github.com/mxreyer/pytorch-dlprim-gfx1013#the-patches)
-(the `pt_ocl.so` from [SETUP.md](SETUP.md), Stage 2, which is also what the
-[JupyterHub notebook image](https://github.com/mxreyer/bc250-jupyterhub-opencl-k3s) ships); cloud cards from Google
+(the `pt_ocl.so` from [SETUP.md](SETUP.md), Stage 2); cloud cards from Google
 Colab.
 The `vs BC-250 40 CU` column is relative to the stock 40 CU config, so the
 overclock reads as a delta against it.
