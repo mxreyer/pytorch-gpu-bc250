@@ -17,8 +17,6 @@ shows how to run PyTorch on it anyway, and how fast it is once you do.
 
 **Step-by-step setup ➡️ [SETUP.md](SETUP.md)**
 
-**Benchmark protocol and full results ➡️ [BENCHMARK.md](BENCHMARK.md)**
-
 ## The stack
 
 ```
@@ -39,8 +37,7 @@ a container is a plain `--device /dev/dri/renderD128`.
 
 ## Results at a glance
 
-ResNet-9 on CIFAR-10, 16 epochs, batch 128. Full tables (L4, CPU, 24 CU,
-accuracy, s/epoch) in [BENCHMARK.md](BENCHMARK.md).
+ResNet-9 on CIFAR-10, 16 epochs, batch 128. Full tables and the protocol live in [BENCHMARK.md](BENCHMARK.md).
 
 | Platform | Precision | Train img/s | Infer img/s |
 | --- | --- | ---: | ---: |
