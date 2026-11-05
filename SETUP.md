@@ -232,9 +232,6 @@ is ~10× looser numerically than fp32. Details:
 The GPU works. From here:
 
 - **Measure it** against cloud GPUs: [BENCHMARK.md](BENCHMARK.md).
-- **Serve it** to several users as JupyterHub notebooks on a single-node
-  k3s cluster, with the GPU handed to unprivileged pods:
-  [bc250-jupyterhub-opencl-k3s](https://github.com/mxreyer/bc250-jupyterhub-opencl-k3s).
 - **Dig into why it is fast now**: the patches, profiling and correctness
   sweeps behind `pt_ocl.so` live in
   [pytorch-dlprim-gfx1013](https://github.com/mxreyer/pytorch-dlprim-gfx1013).
