@@ -9,7 +9,7 @@ On bare metal (SETUP.md, Stage 2):
 
     RUSTICL_ENABLE=radeonsi bc250-ocl-venv/bin/python gpu-check.py
 
-Inside a JupyterHub user pod (bc250-jupyterhub-opencl-k3s, Stage 2):
+Inside a JupyterHub user pod (bc250-jupyterhub-opencl-k3s SETUP.md, step 8):
 
     sudo kubectl -n jupyterhub cp gpu-check.py jupyter-<user>:/tmp/gpu-check.py
     sudo kubectl -n jupyterhub exec jupyter-<user> -- python /tmp/gpu-check.py
