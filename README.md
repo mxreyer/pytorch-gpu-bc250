@@ -37,7 +37,7 @@ a container is a plain `--device /dev/dri/renderD128`.
 
 See [SETUP.md](SETUP.md)
 
-## Results at a glance
+## Benchmarking results at a glance
 
 ResNet-9 on CIFAR-10, 16 epochs, batch 128. Full tables and the protocol live in [BENCHMARK.md](BENCHMARK.md).
 
