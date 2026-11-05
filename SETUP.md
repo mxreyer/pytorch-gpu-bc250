@@ -25,7 +25,6 @@ to a container simple later on.
   Everything below works at the stock 24 CUs, just slower.
 - Python 3.12 (`sudo dnf install -y python3.12`).
 
----
 
 ## Table of Contents
 
@@ -35,8 +34,6 @@ to a container simple later on.
 | 2 | PyTorch runs on the GPU, provably faster than CPU, and trains |
 | 3 | *(recommended)* Mesa's patched libclc, so `torch.randn` and friends work on the GPU |
 | 4 | *(optional)* fp16 convolutions for another ~1.3× |
-
----
 
 ## Stage 1 — OpenCL on bare metal
 
@@ -65,8 +62,6 @@ expected — [Stage 2](#stage-2--pytorch-on-the-gpu) and
 [Stage 3](#stage-3--mesas-patched-libclc-recommended) deal with what it breaks.
 Without `RUSTICL_ENABLE=radeonsi`, `clinfo -l` prints only `Platform #0:
 rusticl` with no device under it.
-
----
 
 ## Stage 2 — PyTorch on the GPU
 
@@ -186,8 +181,6 @@ matmul comparison at three sizes:
 RUSTICL_ENABLE=radeonsi bc250-ocl-venv/bin/python gpu-check.py
 ```
 
----
-
 ## Stage 3 — Mesa's patched libclc (recommended)
 
 **Goal:** every OpenCL built-in works, including the transcendental ones.
@@ -238,8 +231,6 @@ prints a number near 1 instead of a compile error. Background:
 To undo, copy the files from `~/libclc-orig/` back, or
 `sudo dnf reinstall libclc-spirv`.
 
----
-
 ## Stage 4 — fp16 convolutions (optional)
 
 `DLPRIM_CONV_FP16=1` in the environment (or `os.environ[...]` at the very top
@@ -250,8 +241,6 @@ epochs. Tensors stay fp32 in memory; only the arithmetic inside the
 convolution changes. It is off by default because it accumulates in fp16 and
 is ~10× looser numerically than fp32. Details:
 [the fp16 inner-loop write-up](https://github.com/mxreyer/pytorch-dlprim-gfx1013/blob/main/upstream/dlprimitives-winograd-fp16-inner-loop.md).
-
----
 
 ## Done!
 
