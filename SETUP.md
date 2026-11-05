@@ -242,8 +242,8 @@ RUSTICL_ENABLE=radeonsi bc250-ocl-venv/bin/python -c \
   'import torch, pytorch_ocl; print(torch.randn(64, device="ocl:0").std())'
 ```
 
-prints a number near 1 instead of a compile error. Details: Finding 8 in
-[OPENCL-PERF.md](https://github.com/mxreyer/pytorch-dlprim-gfx1013/blob/main/OPENCL-PERF.md).
+prints a number near 1 instead of a compile error. Background:
+[pytorch-dlprim-gfx1013's environment notes](https://github.com/mxreyer/pytorch-dlprim-gfx1013#environment-these-numbers-come-from).
 To undo, copy the files from `~/libclc-orig/` back, or
 `sudo dnf reinstall libclc-spirv`.
 
@@ -257,8 +257,8 @@ convolution kernels to an fp16 inner loop: ~1.3× on ResNet-style training and
 ~1.5× on inference at ~0.5% numerical error, accuracy unchanged over 16
 epochs. Tensors stay fp32 in memory; only the arithmetic inside the
 convolution changes. It is off by default because it accumulates in fp16 and
-is ~10× looser numerically than fp32. Details: Finding 11 in
-[OPENCL-PERF.md](https://github.com/mxreyer/pytorch-dlprim-gfx1013/blob/main/OPENCL-PERF.md).
+is ~10× looser numerically than fp32. Details:
+[the fp16 inner-loop write-up](https://github.com/mxreyer/pytorch-dlprim-gfx1013/blob/main/upstream/dlprimitives-winograd-fp16-inner-loop.md).
 
 ---
 
