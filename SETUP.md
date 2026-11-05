@@ -93,8 +93,15 @@ and `pt_ocl-fixes-only.so` carries only the fixes, as a baseline for the
 
 ```bash
 REL=https://github.com/mxreyer/pytorch-dlprim-gfx1013/releases/download/v1.3.0
-curl -fLo pt_ocl.so "$REL/pt_ocl.so"     # or "$REL/pt_ocl-fixes-only.so" for fixes only
-sha256sum pt_ocl.so                     # compare with the release page
+curl -fLo pt_ocl.so "$REL/pt_ocl.so"
+echo '283410d408e43ade29864b5cd3bb59024d1f78d9367489ce3a8b8c03437d89ad  pt_ocl.so' | sha256sum -c
+```
+
+For the fixes-only baseline instead:
+
+```bash
+curl -fLo pt_ocl.so "$REL/pt_ocl-fixes-only.so"
+echo 'fffe0d76cd4d108865799d727367b14962e7a87099cbff435429d4b176c1f4cf  pt_ocl.so' | sha256sum -c
 ```
 
 Copy the downloaded `pt_ocl.so` over the stock extension in the venv you made above, and
