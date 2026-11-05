@@ -212,8 +212,7 @@ RUSTICL_ENABLE=radeonsi bc250-ocl-venv/bin/python -c \
   'import torch, pytorch_ocl; print(torch.randn(64, device="ocl:0").std())'
 ```
 
-prints a number near 1 instead of a compile error. Background:
-[pytorch-dlprim-gfx1013's environment notes](https://github.com/mxreyer/pytorch-dlprim-gfx1013#environment-these-numbers-come-from).
+prints a number near 1 instead of a compile error.
 To undo, copy the files from `~/libclc-orig/` back, or
 `sudo dnf reinstall libclc-spirv`.
 
