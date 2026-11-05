@@ -68,16 +68,14 @@ numerically correct.
 | `results/` | Every result JSON behind the tables. |
 | `gpu-check.py` | Quick proof that PyTorch is on the GPU, not silently on the CPU. |
 
-## Related
+## Related repositories
 
-- [bc250-jupyterhub-opencl-k3s](https://github.com/mxreyer/bc250-jupyterhub-opencl-k3s):
-  serve this GPU to several users as JupyterHub notebooks on single-node k3s,
-  with the GPU handed to unprivileged pods by a device plugin.
-- [pytorch-dlprim-gfx1013](https://github.com/mxreyer/pytorch-dlprim-gfx1013):
-  the patches, profiling and correctness work behind the patched `pt_ocl.so`.
-- [duggasco/bc250-40cu-unlock](https://github.com/duggasco/bc250-40cu-unlock):
-  unlocking 40 CUs and the higher GPU clock.
-- The write-up: [Turning a mining board into a multi-user ML box](https://mxreyer.github.io/blog/bc250-ml-box/).
+| Repository | What it is |
+| --- | --- |
+| [bc250-jupyterhub-opencl-k3s](https://github.com/mxreyer/bc250-jupyterhub-opencl-k3s) | Serves this GPU to several users as JupyterHub notebooks on single-node k3s, with the GPU handed to unprivileged pods by a device plugin. |
+| [pytorch-dlprim-gfx1013](https://github.com/mxreyer/pytorch-dlprim-gfx1013) | The patches, profiling and correctness work behind the patched `pt_ocl.so`. |
+| [duggasco/bc250-40cu-unlock](https://github.com/duggasco/bc250-40cu-unlock) | Unlocking 40 CUs and the higher GPU clock. |
+| [blog](https://github.com/mxreyer/blog) | The write-up of the whole project, [published here](https://mxreyer.github.io/blog/bc250-ml-box/). |
 
 ## License
 
