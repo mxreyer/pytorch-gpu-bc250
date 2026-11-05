@@ -86,12 +86,15 @@ off by default, and it has a race that makes softmax come out wrong.
 Rebuild the extension with the fallback on (`CUSTOM_REDUCE=1`) plus the
 one-line barrier fix, and drop the resulting `pt_ocl.so` into the venv.
 The patches and a build script live in a separate repository, [pytorch-dlprim-gfx1013](https://github.com/mxreyer/pytorch-dlprim-gfx1013).
-Its [releases](https://github.com/mxreyer/pytorch-dlprim-gfx1013/releases) have prebuilt files `pt_ocl-fixes-only.so` and `pt_ocl.so`: The first file carries only the fixes, the second one also the performance work on top (2.54× on training). The quick route is:
+Its [releases](https://github.com/mxreyer/pytorch-dlprim-gfx1013/releases) have two prebuilt files:
+`pt_ocl.so` carries the fixes plus the performance work on top (2.54× on training),
+and `pt_ocl-fixes-only.so` carries only the fixes, as a baseline for the
+[benchmark](BENCHMARK.md). The quick route is:
 
 ```bash
 REL=https://github.com/mxreyer/pytorch-dlprim-gfx1013/releases/download/v1.3.0
-curl -fLo pt_ocl.so "$REL/pt_ocl-fixes-only.so"     # or "$REL/pt_ocl.so" if you want fixes only
-sha256sum pt_ocl.so                                 # compare with the release page
+curl -fLo pt_ocl.so "$REL/pt_ocl.so"     # or "$REL/pt_ocl-fixes-only.so" for fixes only
+sha256sum pt_ocl.so                     # compare with the release page
 ```
 
 Copy the downloaded `pt_ocl.so` over the stock extension in the venv you made above, and

@@ -22,12 +22,12 @@ BC-250 (OpenCL) and on any CUDA cloud GPU.
 ## Results
 
 BC-250 on `ocl:0` — 24 CU and 40 CU at the stock ~1.5 GHz, 40 CU with the GPU
-overclocked to 2.0 GHz (using `pt_ocl-fixes-only.so` in [SETUP.md](SETUP.md), Stage 2),
-and that overclock with the performance patches from
-[pytorch-dlprim-gfx1013](https://github.com/mxreyer/pytorch-dlprim-gfx1013#the-patches)
-(using `pt_ocl.so` in [SETUP.md](SETUP.md), Stage 2); cloud cards from Google
-Colab. "Fixes-only `pytorch_ocl`" has only the build and correctness fixes it
-needs to work on rusticl; "patched `pytorch_ocl`" adds the performance work.
+overclocked to 2.0 GHz, and that overclock with the performance patches from
+[pytorch-dlprim-gfx1013](https://github.com/mxreyer/pytorch-dlprim-gfx1013#the-patches);
+cloud cards from Google Colab. "Fixes-only `pytorch_ocl`" has only the build and
+correctness fixes it needs to work on rusticl (`pt_ocl-fixes-only.so`);
+"patched `pytorch_ocl`" adds the performance work (`pt_ocl.so`). Both files are
+installed as in [SETUP.md](SETUP.md), Stage 2.
 The `vs BC-250 40 CU` column is relative to the 40 CU @ 1.5 GHz fixes-only
 config, so the overclock and the patches read as deltas against it.
 The extra CUs and the clock are unlocked on the host — see
@@ -74,7 +74,7 @@ The extra CUs and the clock are unlocked on the host — see
 
 - 24 → 40 CUs scaled 532 → 786 img/s = **1.48× for a 1.67× core bump**
 - 40 CUs @ 1.5 GHz → 40 CUs @ 2.0 GHz scaled 786 → 919 img/s = **1.17× for a 1.33× clock bump**
-- For training, the fixes from
+- For training, the performance patches from
   [our profiling](https://github.com/mxreyer/pytorch-dlprim-gfx1013)
   are worth **~2.5×** (919 → 2,337) at fp32
   and **~3.3×** with the fp16 inner loop (2,992), which closes the fp32
@@ -98,7 +98,11 @@ bc250-ocl-venv/bin/python benchmark.py --device ocl:0 --epochs 16 --out results/
 bc250-ocl-venv/bin/python benchmark.py --device cpu   --epochs 4  --out results/bc250-cpu.json
 ```
 
-Add `DLPRIM_CONV_FP16=1` for the fp16-conv row (SETUP.md, Stage 4). The first
+Which rows you reproduce depends on the `pt_ocl.so` installed in the venv
+(SETUP.md, Stage 2): `pt_ocl-fixes-only.so` for the fixes-only rows, `pt_ocl.so`
+for the patched ones. Clear `~/.dlprimitives/cache.db` whenever you switch.
+Add `DLPRIM_CONV_FP16=1` for the fp16-conv row (SETUP.md, Stage 4); it needs
+`pt_ocl.so`, as the fixes-only build ignores it. The first
 run downloads CIFAR-10 (~170 MB) into `./data`; pass `--data <dir>` to
 put it elsewhere.
 

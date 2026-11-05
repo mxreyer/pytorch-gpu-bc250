@@ -44,7 +44,7 @@ ResNet-9 on CIFAR-10, 16 epochs, batch 128. Full tables and the protocol live in
 run on rusticl at all (`pt_ocl-fixes-only.so`); "patched" adds the performance work
 (`pt_ocl.so`). Both are attached to the
 [pytorch-dlprim-gfx1013 releases](https://github.com/mxreyer/pytorch-dlprim-gfx1013/releases)
-from v1.3.0 on — see [BENCHMARK.md](BENCHMARK.md#which-pt_oclso).
+from v1.3.0 on — see [SETUP.md](SETUP.md), Stage 2.
 
 | Platform | Precision | Train img/s | Infer img/s |
 | --- | --- | ---: | ---: |
