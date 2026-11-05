@@ -85,13 +85,13 @@ this). So `softmax`, `cross_entropy`, and bias gradients fail to compile.
 off by default, and it has a race that makes softmax come out wrong.
 Rebuild the extension with the fallback on (`CUSTOM_REDUCE=1`) plus the
 one-line barrier fix, and drop the resulting `pt_ocl.so` into the venv.
-The patches and a build script live in a separate repository, [pytorch-dlprim-gfx1013](https://github.com/mxreyer/pytorch-dlprim-gfx1013), which also carries the
-performance work on top (2.54× on training). Its
-[releases](https://github.com/mxreyer/pytorch-dlprim-gfx1013/releases) have a prebuilt `pt_ocl.so`, so the quick route is:
+The patches and a build script live in a separate repository, [pytorch-dlprim-gfx1013](https://github.com/mxreyer/pytorch-dlprim-gfx1013).
+Its [releases](https://github.com/mxreyer/pytorch-dlprim-gfx1013/releases) have prebuilt files `pt_ocl-fixes-only.so` and `pt_ocl.so`: The first file carries only the fixes, the second one also the performance work on top (2.54× on training). The quick route is:
 
 ```bash
-curl -fLo pt_ocl.so https://github.com/mxreyer/pytorch-dlprim-gfx1013/releases/download/v1.2.0/pt_ocl.so
-echo '0923e8f392f84f20647b4c927bac3baf122c5914d153e4708874cfe594a21d22  pt_ocl.so' | sha256sum -c
+REL=https://github.com/mxreyer/pytorch-dlprim-gfx1013/releases/download/v1.3.0
+curl -fLo pt_ocl.so "$REL/pt_ocl-fixes-only.so"     # or "$REL/pt_ocl.so" if you want fixes only
+sha256sum pt_ocl.so                                 # compare with the release page
 ```
 
 Copy the downloaded `pt_ocl.so` over the stock extension in the venv you made above, and
