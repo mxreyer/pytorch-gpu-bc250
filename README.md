@@ -15,8 +15,6 @@ shows how to run PyTorch on it anyway, and how fast it is once you do.
   CIFAR-10 workload: at 40 CUs / 2.0 GHz the BC-250 **trains ~2% faster than
   a cloud T4 and infers within 2% of it**, in fp32.
 
-**Step-by-step setup ➡️ [SETUP.md](SETUP.md)**
-
 ## The stack
 
 ```
@@ -34,6 +32,10 @@ shows how to run PyTorch on it anyway, and how fast it is once you do.
 
 Only the render node is needed, not ROCm's `/dev/kfd`, so passing the GPU into
 a container is a plain `--device /dev/dri/renderD128`.
+
+## Setup
+
+See [SETUP.md](SETUP.md)
 
 ## Results at a glance
 
