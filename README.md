@@ -41,9 +41,9 @@ ResNet-9 on CIFAR-10, 16 epochs, batch 128. Full tables and the protocol live in
 
 | Platform | Precision | Train img/s | Infer img/s |
 | --- | --- | ---: | ---: |
-| BC-250, 40 CU, stock `pytorch_ocl` | fp32 | 786 | 3,892 |
-| BC-250, 40 CU @ 2.0 GHz, stock | fp32 | 919 | 4,489 |
-| **BC-250, 40 CU @ 2.0 GHz, patched** | **fp32** | **2,337** | **7,130** |
+| BC-250, 40 CU @ 1.5 GHz, stock `pytorch_ocl` | fp32 | 786 | 3,892 |
+| BC-250, 40 CU @ 2.0 GHz, stock `pytorch_ocl`| fp32 | 919 | 4,489 |
+| **BC-250, 40 CU @ 2.0 GHz, patched `pytorch_ocl`** | **fp32** | **2,337** | **7,130** |
 | BC-250, same, `DLPRIM_CONV_FP16=1` | fp16 conv inner loop | 2,992 | 10,508 |
 | T4 (Colab) | fp32 | 2,294 | 7,217 |
 | A100 (Colab) | amp | 18,690 | 49,612 |
