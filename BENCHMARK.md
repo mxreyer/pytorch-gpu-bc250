@@ -25,7 +25,9 @@ BC-250 on `ocl:0` — 24 CU and 40 CU at the stock ~1.5 GHz, 40 CU with the GPU
 overclocked to 2.0 GHz, and that overclock with the software fixes from
 [pytorch-dlprim-gfx1013](https://github.com/mxreyer/pytorch-dlprim-gfx1013#the-patches)
 (the `pt_ocl.so` from [SETUP.md](SETUP.md), Stage 2); cloud cards from Google
-Colab.
+Colab. The BC-250 rows without "fixed" run `pytorch_ocl` with only the build and
+correctness fixes it needs to work on rusticl, not the performance work; see
+[Which `pt_ocl.so`](#which-pt_oclso) to reproduce them.
 The `vs BC-250 40 CU` column is relative to the stock 40 CU config, so the
 overclock reads as a delta against it.
 The extra CUs and the clock are unlocked on the host — see
@@ -85,6 +87,31 @@ The extra CUs and the clock are unlocked on the host — see
   TFLOP/s FP32 on paper — *ahead* of the T4's 8.1.
 
 ## Running it
+
+### Which `pt_ocl.so`
+
+Stock `pytorch_ocl` cannot run this benchmark on rusticl: its cross-entropy,
+softmax and BatchNorm kernels do not compile (SETUP.md, Stage 2). So every
+GPU row on the BC-250 uses a rebuilt `pt_ocl.so`, in one of two builds, both
+attached to the
+[pytorch-dlprim-gfx1013 releases](https://github.com/mxreyer/pytorch-dlprim-gfx1013/releases)
+from v1.3.0 on:
+
+| rows | file | built with |
+| --- | --- | --- |
+| 24 CU, 40 CU @ 1.5 GHz, 40 CU @ 2.0 GHz | `pt_ocl-fixes-only.so` | `./build.sh fixes`: build and correctness fixes only |
+| `fixed`, `DLPRIM_CONV_FP16=1` | `pt_ocl.so` | `./build.sh`: all patches |
+
+Install either one over the venv's extension under the name `pt_ocl.so`, and
+clear the kernel cache each time you switch:
+
+```bash
+REL=https://github.com/mxreyer/pytorch-dlprim-gfx1013/releases/download/v1.3.0
+curl -fLo pt_ocl.so "$REL/pt_ocl-fixes-only.so"     # or "$REL/pt_ocl.so"
+sha256sum pt_ocl.so                                 # compare with the release page
+cp pt_ocl.so bc250-ocl-venv/lib/python3.12/site-packages/pytorch_ocl/pt_ocl.so
+rm -f ~/.dlprimitives/cache.db
+```
 
 ### On the BC-250, bare metal
 
