@@ -102,31 +102,6 @@ Add `DLPRIM_CONV_FP16=1` for the fp16-conv row (SETUP.md, Stage 4). The first
 run downloads CIFAR-10 (~170 MB) into `./data`; pass `--data <dir>` to
 put it elsewhere.
 
-### On the BC-250, through JupyterHub
-
-If you run
-[bc250-jupyterhub-opencl-k3s](https://github.com/mxreyer/bc250-jupyterhub-opencl-k3s):
-
-1. Open `https://juphub.your-name.ts.net`, log in, start your server.
-2. Get `benchmark.py` into your `/home/jovyan` (persistent). Easiest from the
-   box, in a clone of this repo:
-   ```bash
-   sudo kubectl -n jupyterhub cp benchmark.py  jupyter-<user>:/home/jovyan/benchmark.py
-   sudo kubectl -n jupyterhub cp compare.py    jupyter-<user>:/home/jovyan/compare.py
-   ```
-   (or drag the file into the JupyterLab file browser, or paste it into a
-   notebook cell prefixed with `%%writefile benchmark.py`).
-3. In JupyterLab open a **Terminal** (Launcher → Terminal) and run:
-   ```bash
-   python benchmark.py --device ocl:0 --epochs 16 --out results/bc250.json
-   python benchmark.py --device cpu   --epochs 4  --out results/bc250-cpu.json
-   ```
-   or from a notebook cell: `!python benchmark.py --device ocl:0 --epochs 16 --out results/bc250.json`
-4. Results land in `~/results/*.json` on the persistent volume. Download them
-   from the file browser (right-click → Download) to compare with cloud runs.
-
-Note: Epoch 0 is slow (rusticl compiles kernels); the script already excludes it.
-
 ### On Google Colab (free T4)
 
 1. [colab.research.google.com](https://colab.research.google.com) → New notebook.
