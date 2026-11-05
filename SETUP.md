@@ -92,21 +92,7 @@ curl -fLo pt_ocl.so https://github.com/mxreyer/pytorch-dlprim-gfx1013/releases/d
 echo '0923e8f392f84f20647b4c927bac3baf122c5914d153e4708874cfe594a21d22  pt_ocl.so' | sha256sum -c
 ```
 
-Or build it:
-
-```bash
-git clone https://github.com/mxreyer/pytorch-dlprim-gfx1013 ../pytorch-dlprim-gfx1013
-../pytorch-dlprim-gfx1013/build.sh
-```
-
-The script is self-contained: it builds its *own* throwaway venv under
-`scratch/` (same torch + `pytorch_ocl` as above), clones `pytorch_dlprim`,
-applies the patches, and compiles. Budget ~10 minutes on the BC-250 — almost
-all of it the C++ build. It leaves the rebuilt extension at
-`../pytorch-dlprim-gfx1013/pt_ocl.so`.
-
-Copy it — the downloaded `pt_ocl.so`, or `../pytorch-dlprim-gfx1013/pt_ocl.so`
-from the build — over the stock extension in the venv you made above, and
+Copy the downloaded `pt_ocl.so` over the stock extension in the venv you made above, and
 delete the compiled-kernel cache (it is keyed to the old kernel source):
 
 ```bash
