@@ -4,11 +4,6 @@ This walks through getting PyTorch to run on the AsRock BC-250's GPU, on
 bare metal, and proving that it does. When you are done, the board trains
 and infers on `ocl:0` at cloud-T4 speed (see [BENCHMARK.md](BENCHMARK.md)).
 
-To serve that GPU to several people as JupyterHub notebooks on Kubernetes,
-continue with
-[bc250-jupyterhub-opencl-k3s](https://github.com/mxreyer/bc250-jupyterhub-opencl-k3s)
-once this guide works.
-
 ## OpenCL, not ROCm
 
 The BC-250's GPU reports as **gfx1013**, which is not supported by ROCm.
