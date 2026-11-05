@@ -84,8 +84,6 @@ The extra CUs and the clock are unlocked on the host — see
   **software, not silicon.** @ 40 CUs / 2.0 GHz the BC-250 is ~10.2
   TFLOP/s FP32 on paper — *ahead* of the T4's 8.1.
 
----
-
 ## Running it
 
 ### On the BC-250, bare metal
