@@ -38,8 +38,8 @@ The extra CUs and the clock are unlocked on the host — see
 | Platform | Precision | Train img/s | s/epoch | Test acc | vs BC-250 40 CU |
 | --- | --- | ---: | ---: | ---: | ---: |
 | BC-250, CPU only | fp32 | 70 | 718 | 0.877 | 0.09× |
-| BC-250, 24 CU | fp32 | 532 | 93.9 | 0.927 | 0.68× |
-| **BC-250, 40 CU** | **fp32** | **786** | **63.6** | **0.923** | **1.0×** |
+| BC-250, 24 CU @ 1.5 GHz | fp32 | 532 | 93.9 | 0.927 | 0.68× |
+| **BC-250, 40 CU @ 1.5 GHz** | **fp32** | **786** | **63.6** | **0.923** | **1.0×** |
 | BC-250, 40 CU @ 2.0 GHz | fp32 | 919 | 54.4 | 0.924 | 1.17× |
 | **BC-250, 40 CU @ 2.0 GHz, fixed** | **fp32** | **2,337** | **21.4** | **0.924** | **2.97×** |
 | BC-250, same, `DLPRIM_CONV_FP16=1` | fp16 conv inner loop | 2,992 | 16.7 | 0.926 | 3.81× |
@@ -57,8 +57,8 @@ The extra CUs and the clock are unlocked on the host — see
 | Platform | Precision | Infer img/s | vs BC-250 40 CU |
 | --- | --- | ---: | ---: |
 | BC-250, CPU only | fp32 | 214 | 0.06× |
-| BC-250, 24 CU | fp32 | 2,586 | 0.66× |
-| **BC-250, 40 CU** | **fp32** | **3,892** | **1.0×** |
+| BC-250, 24 CU @ 1.5 GHz | fp32 | 2,586 | 0.66× |
+| **BC-250, 40 CU @ 1.5 GHz** | **fp32** | **3,892** | **1.0×** |
 | BC-250, 40 CU @ 2.0 GHz | fp32 | 4,489 | 1.15× |
 | **BC-250, 40 CU @ 2.0 GHz, fixed** | **fp32** | **7,130** | **1.83×** |
 | BC-250, same, `DLPRIM_CONV_FP16=1` | fp16 conv inner loop | 10,508 | 2.70× |
